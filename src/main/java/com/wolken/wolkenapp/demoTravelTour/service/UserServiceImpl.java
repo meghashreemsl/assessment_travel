@@ -63,4 +63,11 @@ public class UserServiceImpl implements UserService {
 			return userentity;
 		}
 	}
+
+	@Override
+	public User validateandsearch(int id) {
+		logger.info("inside search by id");
+		return repo.findById(id);
+	
+}
 }

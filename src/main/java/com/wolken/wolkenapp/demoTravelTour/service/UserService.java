@@ -9,5 +9,6 @@ public interface UserService {
 	public Iterable<User> deleteByUsername(String username);
 	public User findByUsername(String username);
 	public User validateandUpdate(User newuser,int id);
+	public User validateandsearch(int id);
 
 }

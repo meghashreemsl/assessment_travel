@@ -49,7 +49,15 @@ public class RestController {
 		return userService.deleteByUsername(username);
 	}
 	
-	@GetMapping("search/{username}")
+	@GetMapping("/searchid/{id}")
+	@CrossOrigin
+	public User searchid(@PathVariable int id){
+		logger.info("inside search id");
+		return userService.validateandsearch(id);
+	}
+	
+	
+	@GetMapping("/search/{username}")
 	@CrossOrigin
 	public User searchUser(@PathVariable String username) {
 		logger.info("inside search");
