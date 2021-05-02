@@ -11,23 +11,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.wolken.wolkenapp.demoTravelTour.dto.LoginDTO;
 import com.wolken.wolkenapp.demoTravelTour.entity.User;
+import com.wolken.wolkenapp.demoTravelTour.service.LoginService;
 import com.wolken.wolkenapp.demoTravelTour.service.UserService;
 
 
 @org.springframework.web.bind.annotation.RestController
 
-public class RestController {
+public class UserController {
 
 	@Autowired
 	UserService userService;
+	@Autowired 
+	LoginService loginService;
 	
-	private static final Logger logger=LoggerFactory.getLogger(RestController.class);
+	
+	private static final Logger logger=LoggerFactory.getLogger(UserController.class);
 	
 	@PostMapping("/saveuser")
 	@Transactional
 	@CrossOrigin
-	public String registerUser(@RequestBody User user) {
+	public String registerUser(@RequestBody User user)  {
 		logger.info("inisde register");
 		userService.validateandsaveMyUser(user);
 		return "hello"  + user.username +  "your registration is successfull";
@@ -69,6 +75,14 @@ public class RestController {
 	public User updateUser(@PathVariable int id,@RequestBody User newuser) {
 		logger.info("inside update");
 		return userService.validateandUpdate(newuser, id);
+		
+	}
+	
+	@PostMapping("/login")
+	@CrossOrigin
+	public String loginUser(@RequestBody LoginDTO loginDTO) {
+	loginService.ValidateAndLogin(loginDTO);
+	return "login successfull";
 		
 	}
 }

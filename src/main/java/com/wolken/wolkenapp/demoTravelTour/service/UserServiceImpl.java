@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wolken.wolkenapp.demoTravelTour.entity.User;
+import com.wolken.wolkenapp.demoTravelTour.exception.NullException;
 import com.wolken.wolkenapp.demoTravelTour.repository.UserRepository;
 
 @Service
@@ -19,12 +20,19 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public void validateandsaveMyUser(User user) {
+	public User validateandsaveMyUser(User user){
 		logger.info("saving data");
-	
-		if (user != null) {
-			repo.save(user);
+	try {
+		if (user == null) {
+			throw new NullException();
+			
+		}else {
+			return repo.save(user);
 		}
+	}catch(NullException e) {
+		logger.error(e.toString());
+	}
+	return null;
 	}
 
 	@Override
@@ -49,18 +57,27 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User validateandUpdate(User newuser, int id) {
 		logger.info("inside update service");
+		
 		User userentity = repo.findById(id);
 		if (userentity != null) {
 			logger.info("setting values inside update method");
+			logger.info("setting firstname");
 			userentity.setFirstname(newuser.getFirstname());
+			logger.info("setting lastname");
+			userentity.setUsername(newuser.getUsername());
+			logger.info("setting lastname");
 			userentity.setLastname(newuser.getLastname());
+			logger.info("setting age");
 			userentity.setAge(newuser.getAge());
+			logger.info("setting password");
 			userentity.setPassword(newuser.getPassword());
+			logger.info("setting confirm password");
 			userentity.setConfirmpassword(newuser.getConfirmpassword());
-			repo.save(userentity);
-			return userentity;
+			logger.info("saving entity");
+			 return repo.save(userentity);
+			 //return userentity;
 		} else {
-			return userentity;
+			return null;
 		}
 	}
 

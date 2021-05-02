@@ -9,4 +9,5 @@ public interface UserRepository extends CrudRepository<User,Integer>{
 public Iterable<User> deleteByUsername(String username); 
 public User findByUsername(String username);
 public User findById(int id);
+
 }
